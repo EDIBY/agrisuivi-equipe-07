@@ -1,16 +1,13 @@
-+
   // MEMBRE 3 — Récoltes : calculer la production, le rendement et le revenu.
 // Fiche : fiches/3-recoltes.md · Vérifier : 
 
 // Renvoie le total des kilos récoltés sur une parcelle. Aucune récolte : 0.
 export function totalRecolte(recoltes, idParcelle) {
-  const resultat = recoltes.filter(recolte => recolte.parcelle === idParcelle
-
-  );
-   const total = resultat.reduce((somme, recolte) => somme + recolte.kg, 0);
-  return total;
-// throw new Error("TODO Membre 3 : coder totalRecolte dans src/recoltes.js");
+  return recoltes
+  .filter(recolte => recolte.parcelle === idParcelle)
+  .reduce((somme, recolte) => somme + recolte.kg, 0);
 }
+// throw new Error("TODO Membre 3 : coder totalRecolte dans src/recoltes.js");
 
 // Renvoie le rendement en kg par hectare, arrondi à l'entier le plus proche.
 // Une surface nulle ou négative est une erreur : on lance une RangeError.
@@ -18,7 +15,8 @@ export function rendement(kg, surface) {
   if (surface <= 0) { 
   throw new RangeError(
     'La surface doit être supérieure à 0'
-    ); }
+    ); 
+  }
    return Math.round(kg / surface); 
 }
 
@@ -34,11 +32,14 @@ export function bilanRecoltes(parcelles, recoltes, cultures) {
   //throw new Error("TODO Membre 3 : coder bilanRecoltes dans src/recoltes.js");
    return parcelles.map((parcelle) => {
       const kg = totalRecolte(recoltes, parcelle.id);
-      const culture = cultures.find(
-        (element) => element.code === parcelle.culture,
+      const culture = cultures.find((element) => element.code === parcelle.culture
+   );
+   if (!culture) {
+      throw new Error(
+        `Culture introuvable pour la parcelle ${parcelle.id} : ${parcelle.culture}`
       );
-  
-      return {
+    }
+    return {
         id: parcelle.id,
         producteur: parcelle.producteur,
         culture: parcelle.culture,
@@ -53,7 +54,4 @@ export function bilanRecoltes(parcelles, recoltes, cultures) {
 // Le tableau reçu ne doit pas changer d'ordre.
 export function classerParRevenu(bilan) {
   return [...bilan].sort((a, b) => b.revenu - a.revenu);
-  throw new Error(
-    //"TODO Membre 3 : coder classerParRevenu dans src/recoltes.js",
-  );
 }

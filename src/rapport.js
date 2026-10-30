@@ -8,53 +8,47 @@ import { bilanRecoltes, classerParRevenu } from "./recoltes.js";
 
 // Renvoie les id des alertes qui ont cet état, séparés par ', ', ou 'aucune'.
 export function listerParEtat(alertes, etat) {
-  const correspondantes = alertes.filter(function (alerte) {
-    return alerte.etat === etat;
-  });
-const listelds = correspondantes.map(function (alerte) {
-  return alerte.id
-});
-if (listelds.length === 0) {
-  return "aucune"
+  const identifiants = alertes
+  .filter((alerte) => alerte.etat === etat)
+  .map((alerte) => alerte.id);
+if (identifiants.length === 0) {
+  return "aucune";
 }
-return listelds.join(", ");
+return identifiants.join(", ");
 }
 
 // Renvoie le texte complet du rapport (voir fiches/5-equipe-rapport.md).
 export function construireRapport(donnees, date) {
   const { parcelles, cultures, releves, recoltes } = donnees;
-  const surface = surfaceTotale(parcelles);
-  const alertes = alertesIrrigation (parcelles, cultures, releves)
-  const aArroser = listerParEtat(alertes, "ARROSER");
-  const aDrainer = listerParEtat(alertes, "DRAINER");
-  const sansReleve = listerParEtat(alertes, "INCONNU");
-
-  const bilan = bilanRecoltes(parcelles, cultures, recoltes);
-  const productionTotale = bilan.reduce(function (somme, ligne) {
-    return somme + ligne.production;
-  },0);
-  const revenuTotal = bilan.reduce(function (somme, ligne) {
-    return somme + ligne.revenu;
-  },0);
-
+  const alertes = alertesIrrigation(parcelles, cultures, releves)
+  const bilan = bilanRecoltes(parcelles, recoltes, cultures);
   const classement = classerParRevenu(bilan);
-  const meilleur = classement[0];
+  const productionTotale = bilan.reduce((total, ligne) => total + ligne.kg,0);
+  const revenuTotal = bilan.reduce((total, ligne) => total + ligne.revenu,0);
+
+  let meilleureParcelle = "aucune";
+  if(classement.length > 0) {
+    const premiere = classement[0];
+    meilleureParcelle = `${premiere.id} (${premiere.producteur}) avec ${premiere.revenu} FCFA`;
+  }
   const lignes = [
-    "=== RAPPORT AGRISUIVI " + date + " ===",
-    "Parcelles suivies : " + parcelles.length,
-    "Surface totales : " + surface + " ha",
+    `=== RAPPORT AGRISUIVI DU ${date} ===`,
+    `Parcelles suivies : ${parcelles.length}`,
+    `Surface totale : ${surfaceTotale(parcelles)} ha`,
     "",
-    "---Irrigation---",
-    "  à arroser : " + aArroser,
-    "  à drainer : " + aDrainer,
-    "  sans relevé : " + sansReleve,
-    "Bilan des récoltes :",
-    " Production totale : " + productionTotale + " kg",
-    " Revenu total : " + revenuTotal + " FCFA",
-    " Meilleure parcelle : " + meilleur.id + "(" + meilleur.proprietaire + ") avec  " + meilleur.revenu + " FCFA"
+    "--- Irrigation ---",
+    `À arroser : ${listerParEtat(alertes, "ARROSER")}`,
+    `À drainer : ${listerParEtat(alertes, "DRAINER")}`,
+    `Sans relevé : ${listerParEtat(alertes, "INCONNU")}`,
+    "",
+    "--- Récoltes ---",
+    `Production totale : ${productionTotale} kg`,
+    `Revenu estimé : ${revenuTotal} FCFA`,
+    `Meilleure parcelle : ${meilleureParcelle}`,
+    ""
   ];
 
-  return lignes.join("\n") + "\n";
+  return lignes.join("\n");
 }
 
 // Écrit le texte dans le fichier demandé. Crée le dossier s'il n'existe pas.
@@ -63,5 +57,3 @@ export async function enregistrerRapport(chemin, texte) {
  await mkdir(dossier, { recursive: true });
  await writeFile(chemin, texte, "utf8");
 }
-
-
