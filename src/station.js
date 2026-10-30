@@ -5,14 +5,22 @@ import { rejects } from "node:assert";
 
 // Renvoie une promesse qui se résout après capteur.delai millisecondes avec
 // { parcelle, humidite }, ou qui est rejetée si le capteur n'est pas en ligne.
-export function interrogerCapteur(capteur) => {
-  return new Promise ((resolve, reject) => {
+export function interrogerCapteur(capteur) {
+  return new Promise((resolve, reject) => {
     setTimeout(() => {
-      if(capteur.id )
-    })
-  }
-}{
-  throw new Error("TODO Bonus : coder interrogerCapteur dans src/station.js");
+      if(capteur.enLigne){
+        resolve({ parcelle : capteur.enLigne, humidite : capteur.humidite });
+      } 
+      else{
+        reject(`Capteur ${capteur.id} hors ligne`);
+      } 
+    }, capteur.delai);
+  });
+};
+try{
+  return await interrogerCapteur(capteur); }
+  catch (erreur) {
+    throw new Error("TODO Bonus : coder interrogerCapteur dans src/station.js");
 }
 
 // Même travail que interrogerCapteur, mais ne rejette jamais :
