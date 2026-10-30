@@ -17,10 +17,8 @@ export function rendement(kg, surface) {
   if (surface <= 0) { 
   throw new RangeError(
     'La surface doit être supérieure à 0'
-    ); 
-
-  return Math.round(kg/ surface)
-   }
+    ); }
+    return Math.round(kg / surface)
 }
 
 // Renvoie le revenu estimé en FCFA.

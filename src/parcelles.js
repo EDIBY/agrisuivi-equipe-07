@@ -26,5 +26,5 @@ export function surfaceTotale(parcelles) {
 
 // Renvoie un objet : pour chaque culture, le nombre de parcelles et leur surface.
 // Exemple : { cacao: { nombre: 2, surface: 5 }, riz: { nombre: 1, surface: 1 } }
-export function resumeParCulture(parcelles) {
+export function resumeParCulture(parcelles) {}
   
