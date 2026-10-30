@@ -1,4 +1,5 @@
-// MEMBRE 3 — Récoltes : calculer la production, le rendement et le revenu.
++
+  // MEMBRE 3 — Récoltes : calculer la production, le rendement et le revenu.
 // Fiche : fiches/3-recoltes.md · Vérifier : 
 
 // Renvoie le total des kilos récoltés sur une parcelle. Aucune récolte : 0.
@@ -18,7 +19,7 @@ export function rendement(kg, surface) {
   throw new RangeError(
     'La surface doit être supérieure à 0'
     ); }
-    return Math.round(kg / surface);
+  
 }
 
 // Renvoie le revenu estimé en FCFA.
