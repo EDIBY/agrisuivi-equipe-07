@@ -1,9 +1,17 @@
 // BONUS — Station connectée : simuler des capteurs qui répondent après un délai.
 // Fiche : fiches/6-bonus-station.md · Vérifier : npm run test:station
 
+import { rejects } from "node:assert";
+
 // Renvoie une promesse qui se résout après capteur.delai millisecondes avec
 // { parcelle, humidite }, ou qui est rejetée si le capteur n'est pas en ligne.
-export function interrogerCapteur(capteur) {
+export function interrogerCapteur(capteur) => {
+  return new Promise ((resolve, reject) => {
+    setTimeout(() => {
+      if(capteur.id )
+    })
+  }
+}{
   throw new Error("TODO Bonus : coder interrogerCapteur dans src/station.js");
 }
 
