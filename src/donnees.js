@@ -23,10 +23,9 @@ export async function chargerDonnees(dossier) {
     lireJson(join(dossier, "parcelles.json")),
     lireJson(join(dossier, "cultures.json")),
     lireJson(join(dossier, "releves.json")),
-    lireJson(join(dossier, "recoltes.js"))
-  ]);
-
-  return { parcelles, cultures, releves, recoltes};
+    lireJson(join(dossier, "recoltes.json")),
+ ]);
+  return { parcelles, cultures, releves, recoltes };
 }
 
 // Vérifie les textes tapés dans le terminal et renvoie un nouveau relevé.
@@ -51,7 +50,6 @@ export function creerReleve(parcelle, humiditeTexte, temperatureTexte, date) {
     temperature,
   };
 }
-
 
 // Ajoute le relevé à la fin du fichier JSON, enregistre le fichier,
 // puis renvoie le nouveau nombre de relevés.
