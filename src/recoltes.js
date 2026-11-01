@@ -54,4 +54,4 @@ export function bilanRecoltes(parcelles, recoltes, cultures) {
 // Le tableau reçu ne doit pas changer d'ordre.
 export function classerParRevenu(bilan) {
   return [...bilan].sort((a, b) => b.revenu - a.revenu);
-
+}
