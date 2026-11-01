@@ -20,7 +20,7 @@ return identifiants.join(", ");
 // Renvoie le texte complet du rapport (voir fiches/5-equipe-rapport.md).
 export function construireRapport(donnees, date) {
   const { parcelles, cultures, releves, recoltes } = donnees;
-  const alertes = alertesIrrigation(parcelles, cultures, releves)
+  const alertes = alertesIrrigation(parcelles, releves, cultures)
   const bilan = bilanRecoltes(parcelles, recoltes, cultures);
   const classement = classerParRevenu(bilan);
   const productionTotale = bilan.reduce((total, ligne) => total + ligne.kg,0);
