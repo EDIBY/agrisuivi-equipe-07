@@ -160,7 +160,7 @@ La date de la première ligne est celle du jour. Le formateur testera aussi votr
 
 | Rôle                  | Prénom et nom | Compte GitHub |
 | --------------------- | ------------- | ------------- |
-| Membre 1 — Parcelles  |Grâce YEBOUA   |gracedanielle  |
+| Membre 1 — Parcelles  |Grâce YOBOUE   |gracedanielle  |
 | Membre 2 — Irrigation |Cheick SERIFOU |miantomaoumar  |
 | Membre 3 — Récoltes   |Armel GUEI     |gueiarmel      |
 | Membre 4 — Données    |Ebenezer DIBY  |EDIBY          |
